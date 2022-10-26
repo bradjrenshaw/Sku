@@ -913,46 +913,6 @@ local function SpellBookMenuBuilder(aParentEntry, aBooktype, aIsPet, aButtonsWit
 	end
 end
 
----------------------------------------------------------------------------------------------------------------------------------------
-local function EquipmentSetsManagerMenuBuilder(aParentEntry, aSetId)
-	if not aParentEntry then return end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-end
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 local function ActionBarMenuBuilder(aParentEntry, aActionBarName, aBooktype)
@@ -1569,22 +1529,8 @@ function SkuCore:MenuBuilder(aParentEntry)
 
 	local tNewMenuParentEntry =  SkuOptions:InjectMenuItems(aParentEntry, {L["Equipment manager"]}, SkuGenericMenuItem)
 	tNewMenuParentEntry.dynamic = true
-	tNewMenuParentEntry.BuildChildren = function(self)
-		local tNumSets = C_EquipmentSet.GetNumEquipmentSets() 
-
-		if tNumSets > 0 then
-			for x = 1, tNumSets do
-				local tNewMenuEntry = SkuOptions:InjectMenuItems(self, {"Set "..x}, SkuGenericMenuItem)
-				tNewMenuEntry.dynamic = true
-				tNewMenuEntry.filterable = true
-				tNewMenuEntry.BuildChildren = function(self)
-					EquipmentSetsManagerMenuBuilder(self, x)
-				end
-			end
-		else
-			local tNewMenuEntry = SkuOptions:InjectMenuItems(self, {L["Empty"]}, SkuGenericMenuItem)
-		end
-	end
+	--go back here
+	tNewMenuParentEntry.BuildChildren = SkuCore.EquipmentManagerMenuBuilder
 
 	local tNewMenuParentEntry =  SkuOptions:InjectMenuItems(aParentEntry, {L["Action bars"]}, SkuGenericMenuItem)
 	tNewMenuParentEntry.dynamic = true
